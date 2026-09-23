@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ICT Tahlil Qo'llanmasi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0e14; --panel:#111721; --panel2:#161d29; --line:#232c3a;
+  --text:#e6ebf2; --muted:#8b96a8;
+  --bull:#22c99e; --bear:#ef5b5b; --gold:#e0a83e;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;min-height:100%}
+.mono{font-family:'JetBrains Mono',monospace}
+.wrap{display:flex;min-height:100vh}
+
+/* Sidebar */
+.side{width:250px;flex-shrink:0;background:var(--panel);border-right:1px solid var(--line);padding:24px 14px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:0 10px 20px;border-bottom:1px solid var(--line);margin-bottom:16px}
+.brand .tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.5px}
+.brand h1{font-size:20px;margin:6px 0 0;font-weight:800}
+nav button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:none;color:var(--muted);padding:11px 10px;border-radius:8px;font-size:14.5px;font-weight:500;cursor:pointer;font-family:inherit;margin-bottom:2px}
+nav button .n{font-family:'JetBrains Mono',monospace;font-size:11px;color:#525c6b;width:18px}
+nav button:hover{background:var(--panel2);color:var(--text)}
+nav button.active{background:var(--panel2);color:var(--text);box-shadow:inset 3px 0 0 var(--gold)}
+nav button.active .n{color:var(--gold)}
+
+/* Main */
+main{flex:1;padding:40px 48px;max-width:900px}
+section{display:none}
+section.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+h2{font-size:28px;margin:0 0 6px;font-weight:800}
+.sub{color:var(--muted);font-size:15px;margin-bottom:28px}
+p{color:#c4cbd6;max-width:70ch}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin:16px 0}
+.card h3{margin:0 0 8px;font-size:16px;font-weight:700}
+.card h3 .tag{font-family:'JetBrains Mono',monospace;font-size:11px;padding:2px 7px;border-radius:5px;margin-right:8px;font-weight:600}
+.tag.bull{background:rgba(34,201,158,.15);color:var(--bull)}
+.tag.bear{background:rgba(239,91,91,.15);color:var(--bear)}
+.tag.gold{background:rgba(224,168,62,.15);color:var(--gold)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+ul.check{list-style:none;padding:0;margin:0}
+ul.check li{padding:9px 0 9px 26px;position:relative;border-bottom:1px solid var(--line);color:#c4cbd6;font-size:14.5px}
+ul.check li:last-child{border-bottom:none}
+ul.check li::before{content:'';position:absolute;left:0;top:14px;width:10px;height:10px;border:2px solid var(--gold);border-radius:3px}
+.diagram{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:18px;margin:18px 0;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.4px}
+td.mono{color:var(--gold)}
+.note{border-left:3px solid var(--gold);background:rgba(224,168,62,.08);padding:12px 16px;border-radius:0 8px 8px 0;font-size:14px;color:#d9c390;margin:16px 0}
+@media(max-width:800px){.wrap{flex-direction:column}.side{width:100%;height:auto;position:relative}main{padding:24px 20px}.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="side">
+    <div class="brand"><div class="tag">TRADING DESK</div><h1>ICT Tahlil</h1></div>
+    <nav id="nav">
+      <button data-s="s0" class="active"><span class="n">01</span> ICT nima?</button>
+      <button data-s="s1"><span class="n">02</span> Bozor strukturasi</button>
+      <button data-s="s2"><span class="n">03</span> Likvidlik</button>
+      <button data-s="s3"><span class="n">04</span> Order Block / FVG</button>
+      <button data-s="s4"><span class="n">05</span> Timeframelar</button>
+      <button data-s="s5"><span class="n">06</span> Tasdiq va kirish</button>
+      <button data-s="s6"><span class="n">07</span> Kirish checklist</button>
+    </nav>
+  </div>
+
+  <main>
+    <section id="s0" class="active">
+      <h2>ICT nima o'zi?</h2>
+      <p class="sub">Inner Circle Trader — smart money kontseptsiyalariga asoslangan tahlil usuli</p>
+      <p>ICT — bu bank va institutsional treyderlar bozorda qanday harakat qilishini o'rganishga qaratilgan tahlil metodologiyasi. Asosiy g'oya: narx tasodifiy harakatlanmaydi — u <b>likvidlikni yig'ish</b> va <b>samarasiz zonalarni to'ldirish</b> uchun harakatlanadi.</p>
+      <div class="card">
+        <h3><span class="tag gold">ASOS</span>3 ta ustun tushuncha</h3>
+        <ul class="check">
+          <li><b>Bozor strukturasi</b> — narx qayerga ketayotganini ko'rsatadi</li>
+          <li><b>Likvidlik</b> — narx nima uchun harakatlanishini tushuntiradi</li>
+          <li><b>Order Block / FVG</b> — qayerdan kirish kerakligini ko'rsatadi</li>
+        </ul>
+      </div>
+      <div class="note">ICT retail indikatorlar (RSI, MACD) o'rniga narx harakati (price action) va likvidlikka tayanadi.</div>
+    </section>
+
+    <section id="s1">
+      <h2>Bozor strukturasi (Market Structure)</h2>
+      <p class="sub">Trend qayerga ketayotganini aniqlash</p>
+      <div class="grid2">
+        <div class="card"><h3><span class="tag bull">BULLISH</span>Ko'tarilish strukturasi</h3>
+          <p style="font-size:14px">Higher High (HH) va Higher Low (HL) ketma-ketligi. Har bir pastlik oldingisidan yuqori.</p>
+          <svg viewBox="0 0 300 150" style="width:100%;height:auto">
+            <polyline points="10,120 60,50 100,90 150,20 190,60 240,10" fill="none" stroke="var(--bull)" stroke-width="2.5"/>
+            <circle cx="60" cy="50" r="4" fill="var(--bull)"/><text x="60" y="38" fill="#c4cbd6" font-size="11" text-anchor="middle" class="mono">HH</text>
+            <circle cx="100" cy="90" r="4" fill="var(--bull)"/><text x="100" y="108" fill="#c4cbd6" font-size="11" text-anchor="middle" class="mono">HL</text>
+            <circle cx="150" cy="20" r="4" fill="var(--bull)"/><text x="150" y="12" fill="#c4cbd6" font-size="11" text-anchor="middle" class="mono">HH</text>
+            <circle cx="190" cy="60" r="4" fill="var(--bull)"/><text x="190" y="78" fill="#c4cbd6" font-size="11" text-anchor="middle" class="mono">HL</text>
+            <circle cx="240" cy="10" r="4" fill="var(--bull)"/><text x="240" y="8" fill="#c4cbd6" font-size="11" text-anchor="middle" class="mono">HH</text>
+          </svg>
+        </div>
+        <div class="card"><h3><span class="tag bear">BEARISH</span>Pasayish strukturasi</h3>
+          <p style="font-size:14px">Lower Low (LL) va Lower High (LH) ketma-ketligi. Har bir cho'qqi oldingisidan past.</p>
+          <svg viewBox="0 0 300 150" style="width:100%;height:auto">
+            <polyline points="10,20 60,90 100,55 150,120 190,80 240,140" fill="none" stroke="var(--bear)" stroke-width="2.5"/>
+            <circle cx="60" cy="90" r="4" fill="var(--bear)"/><text x="60" y="108" fill="#c4cbd6" font-size="11" text-anchor="middle" class="mono">LL</text>
+            <circle cx="100" cy="55" r="4" fill="var(--bear)"/><text x="100" y="45" fill="#c4cbd6" font-size="11" text-anchor="middle" class="mono">LH</text>
+            <circle cx="150" cy="120" r="4" fill="var(--bear)"/><text x="150" y="138" fill="#c4cbd6" font-size="11" text-anchor="middle" class="mono">LL</text>
+            <circle cx="190" cy="80" r="4" fill="var(--bear)"/><text x="190" y="70" fill="#c4cbd6" font-size="11" text-anchor="middle" class="mono">LH</text>
+            <circle cx="240" cy="140" r="4" fill="var(--bear)"/><text x="240" y="148" fill="#c4cbd6" font-size="11" text-anchor="middle" class="mono">LL</text>
+          </svg>
+        </div>
+      </div>
+      <div class="card">
+        <h3><span class="tag gold">BOS</span>Break of Structure</h3>
+        <p style="font-size:14px;margin:0 0 10px">Narx joriy trend yo'nalishida oldingi struktura nuqtasini buzib o'tsa — trend davom etayotganini tasdiqlaydi.</p>
+        <svg viewBox="0 0 620 130" style="width:100%;height:auto">
+          <line x1="0" y1="30" x2="620" y2="30" stroke="var(--line)" stroke-dasharray="4 4"/>
+          <text x="8" y="22" fill="var(--muted)" font-size="11" class="mono">oldingi HH</text>
+          <polyline points="10,100 90,40 160,70 240,20 310,55 380,25" fill="none" stroke="var(--bull)" stroke-width="2.5"/>
+          <circle cx="90" cy="40" r="4" fill="var(--bull)"/>
+          <circle cx="240" cy="20" r="4" fill="var(--bull)"/>
+          <circle cx="380" cy="25" r="4" fill="var(--gold)"/>
+          <text x="380" y="12" fill="var(--gold)" font-size="12" text-anchor="middle" font-weight="700">BOS ✓</text>
+        </svg>
+      </div>
+      <div class="card">
+        <h3><span class="tag bear">CHoCH</span>Change of Character</h3>
+        <p style="font-size:14px;margin:0 0 10px">Narx trendga qarshi tomonda struktura nuqtasini buzsa — bu trend o'zgarishi (teskari burilish) signalidir. ICT'da eng muhim signallardan biri.</p>
+        <svg viewBox="0 0 620 150" style="width:100%;height:auto">
+          <line x1="0" y1="90" x2="620" y2="90" stroke="var(--line)" stroke-dasharray="4 4"/>
+          <text x="8" y="82" fill="var(--muted)" font-size="11" class="mono">oldingi HL</text>
+          <polyline points="10,110 90,60 160,90 240,30 320,90" fill="none" stroke="var(--bull)" stroke-width="2.5"/>
+          <polyline points="320,90 400,130" fill="none" stroke="var(--bear)" stroke-width="2.5"/>
+          <circle cx="90" cy="60" r="4" fill="var(--bull)"/>
+          <circle cx="240" cy="30" r="4" fill="var(--bull)"/>
+          <circle cx="400" cy="130" r="4" fill="var(--bear)"/>
+          <text x="400" y="145" fill="var(--bear)" font-size="12" text-anchor="middle" font-weight="700">CHoCH ⚠</text>
+        </svg>
+      </div>
+    </section>
+
+    <section id="s2">
+      <h2>Likvidlik (Liquidity)</h2>
+      <p class="sub">Narx nima uchun ma'lum nuqtalarga tortiladi</p>
+      <p>Likvidlik — bu ko'p miqdordagi stop-loss va pending order'lar to'plangan zona. Bank/institutsional treyderlar katta pozitsiyalarini ochish uchun aynan shu zonalarga narxni "olib boradi".</p>
+      <div class="grid2">
+        <div class="card"><h3><span class="tag bull">BUYSIDE LIQUIDITY</span></h3>
+          <p style="font-size:14px">Oldingi cho'qqilar (equal highs) ustida — sotuvchilarning stop-loss'lari va sotib olish orderlari joylashgan</p>
+          <svg viewBox="0 0 300 130" style="width:100%;height:auto">
+            <line x1="10" y1="25" x2="290" y2="25" stroke="var(--gold)" stroke-dasharray="5 4"/>
+            <text x="150" y="15" fill="var(--gold)" font-size="10" text-anchor="middle" class="mono">BSL — equal highs</text>
+            <polyline points="10,100 70,30 130,95 190,28 250,100" fill="none" stroke="var(--bull)" stroke-width="2.5"/>
+            <circle cx="70" cy="30" r="4" fill="var(--bull)"/><circle cx="190" cy="28" r="4" fill="var(--bull)"/>
+          </svg>
+        </div>
+        <div class="card"><h3><span class="tag bear">SELLSIDE LIQUIDITY</span></h3>
+          <p style="font-size:14px">Oldingi pastliklar (equal lows) ostida — xaridorlarning stop-loss'lari va sotish orderlari joylashgan</p>
+          <svg viewBox="0 0 300 130" style="width:100%;height:auto">
+            <line x1="10" y1="105" x2="290" y2="105" stroke="var(--gold)" stroke-dasharray="5 4"/>
+            <text x="150" y="120" fill="var(--gold)" font-size="10" text-anchor="middle" class="mono">SSL — equal lows</text>
+            <polyline points="10,30 70,100 130,35 190,102 250,30" fill="none" stroke="var(--bear)" stroke-width="2.5"/>
+            <circle cx="70" cy="100" r="4" fill="var(--bear)"/><circle cx="190" cy="102" r="4" fill="var(--bear)"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card">
+        <h3><span class="tag gold">LIQUIDITY SWEEP</span>Likvidlikni yig'ib olish</h3>
+        <p style="font-size:14px;margin:0 0 10px">Narx bir zonaga tez kirib, stop-loss'larni "yig'ib" darhol teskari tomonga qaytadi. Bu — ICT'dagi eng kuchli kirish signallaridan biri, ayniqsa CHoCH bilan birga kelsa.</p>
+        <svg viewBox="0 0 620 170" style="width:100%;height:auto">
+          <line x1="0" y1="50" x2="620" y2="50" stroke="var(--gold)" stroke-dasharray="5 4"/>
+          <text x="10" y="42" fill="var(--gold)" font-size="11" class="mono">likvidlik zonasi</text>
+          <polyline points="10,110 100,60 190,90 280,55 340,35 380,90 460,25 540,120" fill="none" stroke="var(--bull)" stroke-width="2.5"/>
+          <circle cx="340" cy="35" r="5" fill="var(--gold)"/>
+          <text x="340" y="20" fill="var(--gold)" font-size="12" text-anchor="middle" font-weight="700">SWEEP</text>
+          <circle cx="540" cy="120" r="4" fill="var(--bear)"/>
+          <text x="540" y="140" fill="var(--bear)" font-size="12" text-anchor="middle" font-weight="700">CHoCH</text>
+        </svg>
+      </div>
+      <div class="note">Qoida: equal highs/lows ko'rsangiz — u yerda likvidlik bor deb bilaverging, narx ko'pincha o'sha tomonga bir bor "sayohat" qiladi.</div>
+    </section>
+
+    <section id="s3">
+      <h2>Order Block va Fair Value Gap</h2>
+      <p class="sub">Aniq kirish zonalarini topish</p>
+      <div class="card">
+        <h3><span class="tag gold">OB</span>Order Block</h3>
+        <p style="font-size:14px;margin:0 0 10px">Kuchli harakatdan oldingi so'nggi qarama-qarshi yo'nalishdagi sham (candle). Bank orderlari shu zonada qolgan deb hisoblanadi — narx qaytganda shu yerdan reaksiya kutiladi.</p>
+        <svg viewBox="0 0 400 150" style="width:100%;height:auto">
+          <rect x="30" y="30" width="60" height="90" fill="rgba(224,168,62,.15)" stroke="var(--gold)" stroke-dasharray="3 3"/>
+          <text x="60" y="22" fill="var(--gold)" font-size="11" text-anchor="middle" class="mono">OB zona</text>
+          <line x1="55" y1="60" x2="55" y2="100" stroke="var(--bear)" stroke-width="2"/><rect x="45" y="70" width="20" height="20" fill="var(--bear)"/>
+          <line x1="105" y1="50" x2="105" y2="130" stroke="var(--bull)" stroke-width="2"/><rect x="95" y="60" width="20" height="40" fill="var(--bull)"/>
+          <line x1="155" y1="30" x2="155" y2="90" stroke="var(--bull)" stroke-width="2"/><rect x="145" y="35" width="20" height="30" fill="var(--bull)"/>
+          <line x1="205" y1="15" x2="205" y2="70" stroke="var(--bull)" stroke-width="2"/><rect x="195" y="20" width="20" height="30" fill="var(--bull)"/>
+          <path d="M105,90 L45,80" stroke="var(--gold)" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+          <text x="230" y="80" fill="var(--muted)" font-size="11">so'nggi bear sham → OB</text>
+          <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--gold)"/></marker></defs>
+        </svg>
+      </div>
+      <div class="card">
+        <h3><span class="tag gold">FVG</span>Fair Value Gap (Imbalance)</h3>
+        <p style="font-size:14px;margin:0 0 10px">3 ta sham orasida hosil bo'lgan narx bo'shlig'i — birinchi va uchinchi shamning soyalari kesishmaydi. Narx bu "samarasiz" zonani ko'pincha to'ldirishga qaytadi, keyin asosiy yo'nalishda davom etadi.</p>
+        <svg viewBox="0 0 400 150" style="width:100%;height:auto">
+          <line x1="55" y1="90" x2="55" y2="130" stroke="var(--bull)" stroke-width="2"/><rect x="45" y="100" width="20" height="25" fill="var(--bull)"/>
+          <line x1="105" y1="30" x2="105" y2="90" stroke="var(--bull)" stroke-width="2"/><rect x="95" y="35" width="20" height="45" fill="var(--bull)"/>
+          <line x1="155" y1="10" x2="155" y2="60" stroke="var(--bull)" stroke-width="2"/><rect x="145" y="15" width="20" height="35" fill="var(--bull)"/>
+          <rect x="55" y="60" width="90" height="30" fill="rgba(224,168,62,.2)" stroke="var(--gold)" stroke-dasharray="3 3"/>
+          <text x="100" y="55" fill="var(--gold)" font-size="11" text-anchor="middle" class="mono">FVG (gap)</text>
+          <text x="250" y="80" fill="var(--muted)" font-size="11">1↔3 sham soyalari kesishmaydi</text>
+        </svg>
+      </div>
+      <table>
+        <tr><th>Zona</th><th>Vazifasi</th><th>Ishonchlilik</th></tr>
+        <tr><td class="mono">OB</td><td>Institutsional order qoldig'i</td><td>Yuqori (HTF'da)</td></tr>
+        <tr><td class="mono">FVG</td><td>Narx bo'shlig'ini to'ldirish</td><td>O'rta-yuqori</td></tr>
+        <tr><td class="mono">Breaker</td><td>Buzilgan OB — yo'nalish o'zgarganda</td><td>Yuqori</td></tr>
+      </table>
+    </section>
+
+    <section id="s4">
+      <h2>Timeframelar</h2>
+      <p class="sub">Yuqoridan pastga tahlil (Top-Down Analysis)</p>
+      <table>
+        <tr><th>TF</th><th>Vazifasi</th><th>Nima qilinadi</th></tr>
+        <tr><td class="mono">Monthly/Weekly</td><td>Katta trend</td><td>Umumiy yo'nalish (bias)ni aniqlash</td></tr>
+        <tr><td class="mono">Daily (HTF)</td><td>Kunlik bias</td><td>Asosiy likvidlik va OB/FVG zonalarini belgilash</td></tr>
+        <tr><td class="mono">4H / 1H</td><td>Zonaga yaqinlashish</td><td>HTF zonaga narx yetib kelishini kuzatish</td></tr>
+        <tr><td class="mono">15m (LTF)</td><td>Tasdiq</td><td>CHoCH yoki sweep orqali kirish signalini kutish</td></tr>
+        <tr><td class="mono">1m-5m</td><td>Aniq kirish</td><td>Entry, stop-loss va take-profit qo'yish</td></tr>
+      </table>
+      <div class="card">
+        <h3><span class="tag gold">KILL ZONE</span>Aktiv savdo sessiyalari</h3>
+        <p style="font-size:14px;margin:0 0 8px">ICT'da likvidlik va manipulyatsiya odatda quyidagi sessiyalarda kuchli bo'ladi (UTC bo'yicha taxminiy):</p>
+        <ul class="check">
+          <li>London Kill Zone — 07:00–10:00 UTC</li>
+          <li>New York Kill Zone — 12:00–15:00 UTC</li>
+          <li>London Close — 15:00–17:00 UTC</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="s5">
+      <h2>Tasdiq va bozorga kirish</h2>
+      <p class="sub">Qachon va qanday tasdiq olinadi</p>
+      <p>Tasdiq — bu yuqori timeframe'dagi bias'ingiz pastroq timeframe'da narx harakati orqali "tasdiqlanishi". Faqat zonaga yetib kelish yetarli emas — reaksiya kerak.</p>
+      <div class="diagram">
+        <svg viewBox="0 0 680 220" style="width:100%;height:auto">
+          <line x1="0" y1="70" x2="680" y2="70" stroke="var(--gold)" stroke-dasharray="5 4"/>
+          <text x="8" y="62" fill="var(--gold)" font-size="11" class="mono">SSL / sellside likvidlik</text>
+          <polyline points="10,30 90,55 170,40 250,65 300,90 340,60 380,140 460,110 460,110 540,150 620,80" fill="none" stroke="var(--muted)" stroke-width="2"/>
+          <circle cx="250" cy="65" r="5" fill="var(--text)"/><text x="250" y="20" fill="var(--text)" font-size="12" text-anchor="middle" font-weight="700">① Zonaga yaqinlashish</text>
+          <circle cx="380" cy="140" r="5" fill="var(--gold)"/><text x="380" y="185" fill="var(--gold)" font-size="12" text-anchor="middle" font-weight="700">② SWEEP</text>
+          <circle cx="460" cy="110" r="5" fill="var(--bull)"/><text x="480" y="100" fill="var(--bull)" font-size="12" font-weight="700">③ CHoCH</text>
+          <circle cx="540" cy="150" r="6" fill="var(--bull)" stroke="var(--text)" stroke-width="1.5"/><text x="540" y="200" fill="var(--bull)" font-size="12" text-anchor="middle" font-weight="700">④ Entry (OB/FVG)</text>
+          <line x1="620" y1="80" x2="670" y2="60" stroke="var(--bull)" stroke-width="2" stroke-dasharray="4 3"/>
+          <text x="672" y="55" fill="var(--bull)" font-size="11" class="mono">TP</text>
+        </svg>
+      </div>
+      <div class="card">
+        <h3><span class="tag gold">1-QADAM</span>HTF bias</h3>
+        <p style="font-size:14px;margin:0">Daily/4H'da struktura va likvidlik zonalarini belgilang. Masalan: narx sellside liquidity'ni yig'ishi kutilyapti → keyin ko'tarilish bias'i.</p>
+      </div>
+      <div class="card">
+        <h3><span class="tag gold">2-QADAM</span>Likvidlik sweep kutish</h3>
+        <p style="font-size:14px;margin:0">Narx belgilangan zonaga (equal lows/highs, OB, FVG) yetib kelishini kuting — bu darhol kirish signali emas, faqat "diqqat zonasi".</p>
+      </div>
+      <div class="card">
+        <h3><span class="tag bull">3-QADAM</span>LTF CHoCH — asosiy tasdiq</h3>
+        <p style="font-size:14px;margin:0">Zonaga yetib kelgach, 5m yoki 15m'da CHoCH (struktura o'zgarishi) paydo bo'lsa — bu sizning tasdiqingiz. CHoCH bo'lmaguncha kirish yo'q.</p>
+      </div>
+      <div class="card">
+        <h3><span class="tag gold">4-QADAM</span>Kirish nuqtasi</h3>
+        <p style="font-size:14px;margin:0">CHoCH'dan keyin hosil bo'lgan yangi OB yoki FVG'ga narx qaytganda — market yoki limit order bilan kirish. Stop-loss sweep bo'lgan nuqtadan tashqarida.</p>
+      </div>
+      <div class="note">Oltin qoida: <b>Sweep + CHoCH</b> birga kelmaguncha — bu faqat taxmin, tasdiqlangan signal emas.</div>
+    </section>
+
+    <section id="s6">
+      <h2>Kirishdan oldingi checklist</h2>
+      <p class="sub">Har bir pozitsiyadan oldin tekshiring</p>
+      <div class="card">
+        <ul class="check">
+          <li>HTF (Daily/4H) bias aniq belgilanganmi?</li>
+          <li>Narx aniq likvidlik zonasiga (equal highs/lows) yetib keldimi?</li>
+          <li>Sweep — stop-loss'lar yig'ib olindimi?</li>
+          <li>LTF (5m/15m)da CHoCH shakllandimi?</li>
+          <li>Kirish uchun OB yoki FVG mavjudmi?</li>
+          <li>Risk/reward nisbati kamida 1:2 dan yuqorimi?</li>
+          <li>Kill zone vaqtida (London/NY) savdo qilyapsizmi?</li>
+          <li>Muhim yangiliklar (news) chiqishi kutilmayaptimi?</li>
+        </ul>
+      </div>
+      <div class="note">Bu material faqat ta'lim maqsadida. Har qanday savdo qarori o'z tahlilingiz va risk-menejmentingizga asoslanishi kerak — moliyaviy maslahat emas.</div>
+    </section>
+  </main>
+</div>
+
+<script>
+const btns=document.querySelectorAll('#nav button');
+btns.forEach(b=>b.addEventListener('click',()=>{
+  btns.forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('main section').forEach(s=>s.classList.remove('active'));
+  b.classList.add('active');
+  document.getElementById(b.dataset.s).classList.add('active');
+  document.querySelector('main').scrollTo(0,0);
+}));
+</script>
+</body>
+</html>
